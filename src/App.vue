@@ -7,9 +7,9 @@ export default {
     return {
       buttonColor: '',
       buttonSize: 'md',
-      isActive: true,
-      isLoading: false,
-      isStretch: false,
+      buttonActive: true,
+      buttonLoading: false,
+      buttonStretch: false,
       buttonIcon: true,
       buttonIconVariant: '',
     }
@@ -56,33 +56,33 @@ export default {
           <label for="">Активна:</label>
           <label for="">
             True
-            <input type="radio" name="active" :value="true" v-model="isActive">
+            <input type="radio" name="active" :value="true" v-model="buttonActive">
           </label>
           <label for="">
             False
-            <input type="radio" name="active" :value="false" v-model="isActive">
+            <input type="radio" name="active" :value="false" v-model="buttonActive">
           </label>
           <hr>
 
           <label for="">Загрузка:</label>
           <label for="">
             True
-            <input type="radio" name="loading" :value="true" v-model="isLoading">
+            <input type="radio" name="loading" :value="true" v-model="buttonLoading">
           </label>
           <label for="">
             False
-            <input type="radio" name="loading" :value="false" v-model="isLoading">
+            <input type="radio" name="loading" :value="false" v-model="buttonLoading">
           </label>
           <hr>
 
           <label for="">Вся ширина:</label>
           <label for="">
             True
-            <input type="radio" name="stretch" :value="true" v-model="isStretch">
+            <input type="radio" name="stretch" :value="true" v-model="buttonStretch">
           </label>
           <label for="">
             False
-            <input type="radio" name="stretch" :value="false" v-model="isStretch">
+            <input type="radio" name="stretch" :value="false" v-model="buttonStretch">
           </label>
           <hr>
 
@@ -96,7 +96,7 @@ export default {
             <input type="radio" name="icon" :value="false" v-model="buttonIcon">
           </label>
           <hr>
-          <label for="">Место иконки:</label>
+          <label for="">Иконка:</label>
           <label for="">
             left
             <input type="radio" name="icon-variant" value="left" v-model="buttonIconVariant">
@@ -105,55 +105,60 @@ export default {
             right
             <input type="radio" name="icon-variant" value="right" v-model="buttonIconVariant">
           </label>
+          <label for="">
+            Disable
+            <input type="radio" name="icon-variant" :value="null" v-model="buttonIconVariant">
+          </label>
           <hr>
         </form>
       </div>
       <ui-button
           :text="'Add'"
           :variant="buttonColor"
-          :is-active="isActive"
-          :is-loading="isLoading"
-          :is-stretch="isStretch"
+          :active="buttonActive"
+          :loading="buttonLoading"
+          :stretch="buttonStretch"
           :size="buttonSize"
+          :icon-variant="buttonIconVariant"
       >
-        <template #left v-if="buttonIcon===true && buttonIconVariant==='left' && isLoading===false">
+        <template #left >
           <i class="icon">X</i>
         </template>
-        <template #right v-if="buttonIcon===true && buttonIconVariant==='right' && isLoading===false">
+        <template #right >
           <i class="icon">X</i>
         </template>
       </ui-button>
     </div>
   </div>
 <!--  <div class="container">-->
-<!--    <div class="card">-->
-<!--      <h1>UI Button variant</h1>-->
-<!--      <ui-button-->
-<!--          :text="'Add'"-->
-<!--          :variant="'black'"-->
-<!--          :is-active="true"-->
-<!--          :is-loading="false"-->
-<!--          :is-stretch="false"-->
-<!--          :size="'xs'"-->
-<!--      >-->
+  <!--    <div class="card">-->
+  <!--      <h1>UI Button variant</h1>-->
+  <!--      <ui-button-->
+  <!--          :text="'Add'"-->
+  <!--          :variant="'black'"-->
+  <!--          :is-active="true"-->
+  <!--          :is-loading="false"-->
+  <!--          :is-stretch="false"-->
+  <!--          :size="'xs'"-->
+  <!--      >-->
 
-<!--        &lt;!&ndash;  Можно ли сделать при передаче пустой строки ``,-->
-<!--              чтобы размер по дефолту был md, в пропсе-->
-<!--               default не работает. Или в разработке не будут передавать-->
-<!--               пустые строки, вместо параметра?&ndash;&gt;-->
-<!--        <template #left v-if="true"> &lt;!&ndash; Надо ли связывать с isLoading &ndash;&gt;-->
-<!--          &lt;!&ndash;          <img class="icon" src="https://play.vuejs.org/logo.svg" alt="">&ndash;&gt;-->
-<!--          &lt;!&ndash;           Сделал костыль, через i-->
-<!--                         (Сюда можно, через копи-пасту-->
-<!--                         вставить иконку 🔍, вместо Х)-->
-<!--                         Не разобрался, как с выбором размера кноки,-->
-<!--                         изменялась и иконка через img&ndash;&gt;-->
-<!--          <i class="icon">X</i>-->
-<!--        </template>-->
-<!--        &lt;!&ndash;        Смотря где нужна иконка слева или справа   &ndash;&gt;-->
-<!--        <template #right v-if="false">-->
-<!--          <i class="icon">X</i>-->
-<!--        </template>-->
+  <!--        &lt;!&ndash;  Можно ли сделать при передаче пустой строки ``,-->
+  <!--              чтобы размер по дефолту был md, в пропсе-->
+  <!--               default не работает. Или в разработке не будут передавать-->
+  <!--               пустые строки, вместо параметра?&ndash;&gt;-->
+  <!--        <template #left v-if="true"> &lt;!&ndash; Надо ли связывать с isLoading &ndash;&gt;-->
+  <!--          &lt;!&ndash;          <img class="icon" src="https://play.vuejs.org/logo.svg" alt="">&ndash;&gt;-->
+  <!--          &lt;!&ndash;           Сделал костыль, через i-->
+  <!--                         (Сюда можно, через копи-пасту-->
+  <!--                         вставить иконку 🔍, вместо Х)-->
+  <!--                         Не разобрался, как с выбором размера кноки,-->
+  <!--                         изменялась и иконка через img&ndash;&gt;-->
+  <!--          <i class="icon">X</i>-->
+  <!--        </template>-->
+  <!--        &lt;!&ndash;        Смотря где нужна иконка слева или справа   &ndash;&gt;-->
+  <!--        <template #right v-if="false">-->
+  <!--          <i class="icon">X</i>-->
+  <!--        </template>-->
 </template>
 
 <style scoped>
